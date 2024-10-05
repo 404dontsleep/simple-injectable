@@ -13,13 +13,13 @@ class SimpleInjectable {
     constructor() {
         this.injectListener = [];
     }
-    addInjectListener(listener) {
+    addInjectionListener(listener) {
         this.injectListener.push(listener);
     }
-    removeInjectListener(listener) {
+    removeInjectionListener(listener) {
         this.injectListener = this.injectListener.filter((l) => l !== listener);
     }
-    onInjectable(injectable) {
+    onInjection(injectable) {
         return __awaiter(this, void 0, void 0, function* () {
             for (const listener of this.injectListener) {
                 yield listener(injectable);

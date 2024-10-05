@@ -1,6 +1,7 @@
-import SimpleInjectable, {
-  IInjectable,
-} from "./simple-injectable/SimpleInjectable";
+import SimpleInjectable from "./simple-injectable/SimpleInjectable";
 
 export default SimpleInjectable;
-export type { IInjectable };
+
+export type { IInjectable } from "./simple-injectable/SimpleInjectable";
+
+export type { InjectionListener } from "./simple-injectable/SimpleInjectable";

@@ -1,11 +1,13 @@
-interface IInjectable<InjectName = string> {
+interface IInjectable<T, InjectName = string> {
     readonly injectName: InjectName;
+    data: T;
 }
-declare class SimpleInjectable<T extends IInjectable> {
+type InjectionListener<T> = (injectable: T) => Promise<void>;
+declare class SimpleInjectable<T> {
     private injectListener;
-    addInjectListener(listener: (injectable: T) => Promise<void>): void;
-    removeInjectListener(listener: (injectable: T) => Promise<void>): void;
-    onInjectable(injectable: T): Promise<void>;
+    addInjectionListener(listener: InjectionListener<T>): void;
+    removeInjectionListener(listener: InjectionListener<T>): void;
+    onInjection(injectable: T): Promise<void>;
 }
 export default SimpleInjectable;
-export type { IInjectable };
+export type { IInjectable, InjectionListener };

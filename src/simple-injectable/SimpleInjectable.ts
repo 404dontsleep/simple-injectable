@@ -1,16 +1,17 @@
-interface IInjectable<InjectName = string> {
+interface IInjectable<T, InjectName = string> {
   readonly injectName: InjectName;
+  data: T;
 }
-
-class SimpleInjectable<T extends IInjectable> {
-  private injectListener: Array<(injectable: T) => Promise<void>> = [];
-  addInjectListener(listener: (injectable: T) => Promise<void>) {
+type InjectionListener<T> = (injectable: T) => Promise<void>;
+class SimpleInjectable<T> {
+  private injectListener: InjectionListener<T>[] = [];
+  addInjectionListener(listener: InjectionListener<T>) {
     this.injectListener.push(listener);
   }
-  removeInjectListener(listener: (injectable: T) => Promise<void>) {
+  removeInjectionListener(listener: InjectionListener<T>) {
     this.injectListener = this.injectListener.filter((l) => l !== listener);
   }
-  async onInjectable(injectable: T): Promise<void> {
+  async onInjection(injectable: T) {
     for (const listener of this.injectListener) {
       await listener(injectable);
     }
@@ -18,4 +19,4 @@ class SimpleInjectable<T extends IInjectable> {
 }
 
 export default SimpleInjectable;
-export type { IInjectable };
+export type { IInjectable, InjectionListener };
